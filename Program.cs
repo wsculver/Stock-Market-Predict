@@ -16,8 +16,10 @@ namespace TwitterAPIIntegration
 {
     static class Program
     {
+        //Login to MySql
         public static string MySQLConnectionString = "SERVER=localhost;DATABASE=srs;UID=root;PASSWORD=password;";
 
+        //Get MySql table
         private static List<string>[] LoadData(string TableName, string column2, string column3, bool id)
         {
             List<string>[] list = new List<string>[3];
@@ -51,7 +53,8 @@ namespace TwitterAPIIntegration
 
             return list;
         }
-
+        
+//Old code that needs to be updated to use MySql instead of files
 #if false
         //public static string[] keyWords = new string[] { "Texas", "United States" };
         public static string StockSymbols = "C:\\Users\\William\\Desktop\\SRS 2017-2018\\Read Twitter Example\\S&P 500 Symbols.txt";
@@ -92,6 +95,8 @@ namespace TwitterAPIIntegration
                     }
                 }*/
 
+                //How could I use MySql here?
+                //How could I check if a string contains the value at a certain row in MySql?
                 for (int i = 0; i < File.ReadAllLines(StockSymbols).Length; i++)
                 {
                     if ((item.Text.Contains((File.ReadAllLines(StockSymbols)[i] + " "), StringComparison.OrdinalIgnoreCase) || item.Text.Contains((File.ReadAllLines(StockNames)[i] + " "), StringComparison.OrdinalIgnoreCase)) && !FileVarSet)
@@ -194,6 +199,7 @@ namespace TwitterAPIIntegration
             Console.ReadLine();
         }
 
+        //Gets tweets
         public static List<Status> GetTwitterFeeds()
         {
             //string screenname = "realdonaldtrump";
@@ -217,12 +223,18 @@ namespace TwitterAPIIntegration
             ulong maxId = 0;
             bool flag = true;
             var statusResponse = new List<Status>();
+            
+            //Get tweets if these conditions are met
+            //How could I use MySql tables for this?
             statusResponse = (from tweet in twitterCtx.Status
                               where tweet.Type == StatusType.Home
                                     //&& tweet.ScreenName == screenname
                                     && tweet.Count == 200
                                     && (DateTime)tweet.CreatedAt >= DateTime.Today
+                              
+                                    //How could I use MySql tables instead of a file for this line?
                                     && (File.ReadAllLines(StockSymbols).Any(tweet.Text.Contains) || File.ReadAllLines(StockNames).Any(tweet.Text.Contains))
+                              
                                     //&& keyWords.Any(tweet.Text.Contains)
                                     //&& tweet.Text.Contains("lockheed")
                                     //&& !File.ReadAllText(PrevTweets).Contains(tweet.Text)
