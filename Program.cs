@@ -40,6 +40,16 @@ namespace TwitterAPIIntegration
             }
             connection.Open();
 
+            /*
+            * When selecting from an SQL database, you don't have to use the `db.table` syntax
+            * Unless you plan on having multiple databases holding different tables (which I don't reccomend.)
+            * Usually, we like to keep multiple tables, holding all the information that you need
+            * in on database. 
+            * You can select a database with the following syntax:
+            * USE `databasename`;
+            * And from hereon out, we'll see that any queries we execute such as:
+            * SELECT * FROM `table`; are already executed within the defined USE database environment.
+            */
             string query = "SELECT * FROM srs." + TableName;
             MySqlCommand cmd = new MySqlCommand(query, connection);
             MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -78,6 +88,10 @@ namespace TwitterAPIIntegration
             }
             connection.Open();
 
+            /*
+            * Look at my note above, to maybe help you clean this up a little bit, so that you're able to read it 
+            * a little more easily.
+            */
             if (column2 != "")
             {
                 query = "INSERT INTO " + database + "." + TableName + " (" + column + "," + column2 + ") " + "VALUES('" + contents + "','" + contents2 + "')";
@@ -158,7 +172,7 @@ namespace TwitterAPIIntegration
 
         private static void Main(string[] args)
         {
-            Console.WriteLine("I think I can, I think I can, I think I can...");
+            Console.WriteLine("I think I can, I think I can, I think I can..."); // You can!
             var tweetList = GetTwitterFeeds();
             /*string FileVariable;
             string FileVariable2;
