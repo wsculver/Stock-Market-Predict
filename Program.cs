@@ -20,7 +20,11 @@ namespace TwitterAPIIntegration
         public static string MySQLConnectionString = "SERVER=localhost;DATABASE=srs;UID=root;PASSWORD=password;";
 
         //Get MySql table
+<<<<<<< HEAD
         private static List<string>[] LoadData(string TableName, string column2, string column3)
+=======
+        private static List<string>[] LoadData(string TableName, string column2, string column3, bool id)
+>>>>>>> 448ec85854cf15628d5c0f717e379a5a0f65b61c
         {
             List<string>[] list = new List<string>[3];
             list[0] = new List<string>();
@@ -49,6 +53,7 @@ namespace TwitterAPIIntegration
 
             return list;
         }
+<<<<<<< HEAD
 
         private static void AddData(string TableName, string column, string contents)
         {
@@ -74,6 +79,11 @@ namespace TwitterAPIIntegration
 
         //Old code that needs to be updated to use MySql tables instead of files
 #if true
+=======
+        
+//Old code that needs to be updated to use MySql instead of files
+#if false
+>>>>>>> 448ec85854cf15628d5c0f717e379a5a0f65b61c
         //public static string[] keyWords = new string[] { "Texas", "United States" };
         /*public static string StockSymbols = "C:\\Users\\William\\Desktop\\SRS 2017-2018\\Read Twitter Example\\S&P 500 Symbols.txt";
         public static string StockNames = "C:\\Users\\William\\Desktop\\SRS 2017-2018\\Read Twitter Example\\S&P 500 Names.txt";
@@ -119,7 +129,13 @@ namespace TwitterAPIIntegration
                     }
                 }*/
 
+<<<<<<< HEAD
                 for (int i = 0; i < LoadData("all_companies", "symbol", "name")[1].Count; i++)
+=======
+                //How could I use MySql here?
+                //How could I check if a string contains the value at a certain row in MySql?
+                for (int i = 0; i < File.ReadAllLines(StockSymbols).Length; i++)
+>>>>>>> 448ec85854cf15628d5c0f717e379a5a0f65b61c
                 {
                     //if ((item.Text.Contains((File.ReadAllLines(StockSymbols)[i] + " "), StringComparison.OrdinalIgnoreCase) || item.Text.Contains((File.ReadAllLines(StockNames)[i] + " "), StringComparison.OrdinalIgnoreCase)) && !FileVarSet)
                     if ((item.Text.Contains(((LoadData("all_companies", "symbol", "name")[1])[i] + " "), StringComparison.OrdinalIgnoreCase) || item.Text.Contains((LoadData("all_companies", "symbol", "name")[1])[i], StringComparison.OrdinalIgnoreCase)) && !FileVarSet)
@@ -258,6 +274,7 @@ namespace TwitterAPIIntegration
             Console.ReadLine();
         }
 
+        //Gets tweets
         public static List<Status> GetTwitterFeeds()
         {
             //string screenname = "realdonaldtrump";
@@ -281,13 +298,23 @@ namespace TwitterAPIIntegration
             ulong maxId = 0;
             bool flag = true;
             var statusResponse = new List<Status>();
+            
+            //Get tweets if these conditions are met
+            //How could I use MySql tables for this?
             statusResponse = (from tweet in twitterCtx.Status
                               where tweet.Type == StatusType.Home
                                     //&& tweet.ScreenName == screenname
                                     && tweet.Count == 200
                                     && (DateTime)tweet.CreatedAt >= DateTime.Today
+<<<<<<< HEAD
                                     && LoadData("all_companies", "symbol", "name")[1].Any(w => tweet.Text.Contains(w)) || LoadData("all_companies", "symbol", "name")[2].Any(w => tweet.Text.Contains(w))
                                     //&& (File.ReadAllLines(StockSymbols).Any(tweet.Text.Contains) || File.ReadAllLines(StockNames).Any(tweet.Text.Contains))
+=======
+                              
+                                    //How could I use MySql tables instead of a file for this line?
+                                    && (File.ReadAllLines(StockSymbols).Any(tweet.Text.Contains) || File.ReadAllLines(StockNames).Any(tweet.Text.Contains))
+                              
+>>>>>>> 448ec85854cf15628d5c0f717e379a5a0f65b61c
                                     //&& keyWords.Any(tweet.Text.Contains)
                                     //&& tweet.Text.Contains("lockheed")
                                     //&& !File.ReadAllText(PrevTweets).Contains(tweet.Text)
